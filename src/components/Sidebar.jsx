@@ -1,5 +1,7 @@
 import { Nav } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../Redux/Auth/action";
 import logoImage from "../assets/images/app_logo.png";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { MdOutlineInventory } from "react-icons/md";
@@ -14,8 +16,17 @@ import { FaTasks, FaFlag } from "react-icons/fa";
 const Sidebar = ({ collapsed }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   
   const handleLogout = () => {
+    // Clear localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    
+    // Dispatch logout action
+    dispatch(logoutAction());
+    
+    // Navigate to login
     navigate("/login", { replace: true });
   };
   

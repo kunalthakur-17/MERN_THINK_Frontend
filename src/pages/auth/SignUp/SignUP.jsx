@@ -36,7 +36,7 @@ const SignUp = () => {
   const { data, loading, error } = useSelector((state) => state.signupReducer);
 
   useEffect(() => {
-    if (data && data.success) {
+    if (data && data.status === 201) {
       toast.dismiss("signup-loading");
       toast.success(data.message || "User registered successfully");
       dispatch(signupActionReset());
