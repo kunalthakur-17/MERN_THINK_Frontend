@@ -36,13 +36,19 @@ const SignUp = () => {
   const { data, loading, error } = useSelector((state) => state.signupReducer);
 
   useEffect(() => {
+    console.log('SignUp useEffect - data:', data);
+    console.log('SignUp useEffect - error:', error);
+    console.log('SignUp useEffect - loading:', loading);
+    
     if (data && data.status === 201) {
+      console.log('Success condition met, dismissing toast and navigating');
       toast.dismiss("signup-loading");
       toast.success(data.message || "User registered successfully");
       dispatch(signupActionReset());
       navigate("/login");
     }
     if (error) {
+      console.log('Error condition met:', error);
       toast.dismiss("signup-loading");
       toast.error(error.message || "Registration failed");
       dispatch(signupActionReset());
