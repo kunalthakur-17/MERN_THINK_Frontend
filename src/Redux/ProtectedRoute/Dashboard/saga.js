@@ -8,19 +8,23 @@ function* getDashboardSagaFunction({ payload }) {
       type: dashboard.GET_DASHBOARD_LOADING,
       payload: {},
     });
+    console.log('Making dashboard API call...');
     const response = yield call(getDashboardApi, payload || {});
+    console.log('Dashboard API response:', response);
     if (response.status == 200) {
       yield put({
         type: dashboard.GET_DASHBOARD_SUCCESS,
         payload: response.data.response,
       });
     } else {
+      console.log('Dashboard API failed with status:', response.status);
       yield put({
         type: dashboard.GET_DASHBOARD_FAILURE,
         payload: response.data || { message: 'Failed to get dashboard data' },
       });
     }
   } catch (error) {
+    console.error('Dashboard API error:', error);
     yield put({
       type: dashboard.GET_DASHBOARD_FAILURE,
       payload: error?.response?.data || error?.data || { message: 'Network error' },
