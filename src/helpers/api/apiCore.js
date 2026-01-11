@@ -33,9 +33,11 @@ axios.interceptors.response.use(
         break;
       case 401:
         message = data?.message || "Unauthorized access";
-        sessionStorage.clear();
-        localStorage.clear();
-        window.location.href = "/login";
+        console.log('401 error - token might be invalid');
+        // Temporarily disable auto-logout for debugging
+        // sessionStorage.clear();
+        // localStorage.clear();
+        // window.location.href = "/login";
         break;
       case 403:
         message = data?.message || "Access Forbidden";
