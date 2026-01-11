@@ -15,6 +15,7 @@ import TaskPriority from "./pages/protectedPage/TaskPriority/TaskPriority";
 import Settings from "./pages/protectedPage/Settings/Settings";
 import Help from "./pages/protectedPage/Help/Help";
 import Layout from "./components/Layout";
+import ProtectedRoute from "./components/ProtectedRoutes";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -26,13 +27,13 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
-          <Route path="/my-tasks" element={<Layout><MyTask /></Layout>} />
-          <Route path="/task-categories" element={<Layout><TaskCategories /></Layout>} />
-          <Route path="/task-status" element={<Layout><TaskStatus /></Layout>} />
-          <Route path="/task-priority" element={<Layout><TaskPriority /></Layout>} />
-          <Route path="/settings" element={<Layout><Settings /></Layout>} />
-          <Route path="/help" element={<Layout><Help /></Layout>} />
+          <Route path="/dashboard" element={<ProtectedRoute><Layout><Dashboard /></Layout></ProtectedRoute>} />
+          <Route path="/my-tasks" element={<ProtectedRoute><Layout><MyTask /></Layout></ProtectedRoute>} />
+          <Route path="/task-categories" element={<ProtectedRoute><Layout><TaskCategories /></Layout></ProtectedRoute>} />
+          <Route path="/task-status" element={<ProtectedRoute><Layout><TaskStatus /></Layout></ProtectedRoute>} />
+          <Route path="/task-priority" element={<ProtectedRoute><Layout><TaskPriority /></Layout></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><Layout><Settings /></Layout></ProtectedRoute>} />
+          <Route path="/help" element={<ProtectedRoute><Layout><Help /></Layout></ProtectedRoute>} />
         </Routes>
       </Router>
       <ToastContainer

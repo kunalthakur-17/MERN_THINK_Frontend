@@ -1,39 +1,11 @@
-import { Navigate, useLocation } from "react-router-dom";
-import { clearAuthData } from "../utils/tokenUtils";
+import { Navigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const ProtectedRoute = ({ children }) => {
-  const token = sessionStorage.getItem("token");
-  const role = sessionStorage.getItem("userRole");
-  const location = useLocation();
+  const token = sessionStorage.getItem("token") || localStorage.getItem("token");
 
-  useEffect(() => {
-    // Check for role mismatch and clear auth if found
-    if (token && role) {
-      const path = location.pathname;
-      const isClientPath = path.startsWith("/client");
-      const isCompanyAdminPath = path.startsWith("/admin");
-      const isStaffPath = path.startsWith("/staff");
-      const isVendorPath = path.startsWith("/vendor");
-
-      const hasRoleMismatch = 
-        (role === "company_admin" && (isClientPath || isStaffPath || isVendorPath)) ||
-        (role === "client" && (isCompanyAdminPath || isStaffPath || isVendorPath)) ||
-        (role === "staff" && (isCompanyAdminPath || isClientPath || isVendorPath)) ||
-        (role === "vendor" && (isCompanyAdminPath || isClientPath || isStaffPath));
-
-      if (hasRoleMismatch) {
-        // Clear all auth data
-        sessionStorage.clear();
-        localStorage.clear();
-        window.location.href = "/login";
-        return;
-      }
-    }
-  }, [token, role, location.pathname]);
-
-  // Check if token exists and user has proper role
-  if (!token || !role) {
+  // Check if token exists
+  if (!token) {
     return <Navigate to="/login" replace />;
   }
 
@@ -41,15 +13,15 @@ const ProtectedRoute = ({ children }) => {
   try {
     const payload = JSON.parse(atob(token.split(".")[1]));
     const currentTime = Date.now() / 1000;
+    // Only check expiration if exp field exists
     if (payload.exp && payload.exp < currentTime) {
       sessionStorage.clear();
       localStorage.clear();
       return <Navigate to="/login" replace />;
     }
   } catch (error) {
-    sessionStorage.clear();
-    localStorage.clear();
-    return <Navigate to="/login" replace />;
+    console.log('Token validation error:', error);
+    // Don't clear storage on parsing error, token might still be valid
   }
 
   return children;

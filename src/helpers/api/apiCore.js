@@ -281,15 +281,9 @@ if (user) {
   }
 } else {
   // Check localStorage for token (your auth system uses this)
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
   if (token) {
     setAuthorization(token);
-  } else {
-    // Fallback to sessionStorage
-    const sessionToken = sessionStorage.getItem("token");
-    if (sessionToken) {
-      setAuthorization(sessionToken);
-    }
   }
 }
 
