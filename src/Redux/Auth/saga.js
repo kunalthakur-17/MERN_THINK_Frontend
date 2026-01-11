@@ -21,7 +21,9 @@ function* loginSagaFunction({ payload }) {
         username: response.data.response.username
       }));
       
-      // Store in sessionStorage for apiCore compatibility
+      // Store in sessionStorage for ProtectedRoute compatibility
+      sessionStorage.setItem('token', response.data.response.token);
+      sessionStorage.setItem('userRole', 'user');
       sessionStorage.setItem('event_management_user', JSON.stringify({
         token: response.data.response.token,
         user: {
