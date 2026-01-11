@@ -1,6 +1,6 @@
 import { all, fork, put, takeEvery, call } from "redux-saga/effects";
 import { auth } from "./constant";
-import { loginApi, logoutApi, signupApi } from "./api";
+import { loginApi, logoutApi, signupApi, changePasswordApi } from "./api";
 import { setAuthorization } from "../../helpers/api/apiCore";
 
 function* loginSagaFunction({ payload }) {
@@ -107,6 +107,32 @@ function* signupSagaFunction({ payload }) {
   }
 }
 
+function* changePasswordSagaFunction({ payload }) {
+  try {
+    yield put({
+      type: auth.CHANGE_PASSWORD_LOADING,
+      payload: {},
+    });
+    const response = yield call(changePasswordApi, payload || {});
+    if (response.status == 200) {
+      yield put({
+        type: auth.CHANGE_PASSWORD_SUCCESS,
+        payload: { ...response.data },
+      });
+    } else {
+      yield put({
+        type: auth.CHANGE_PASSWORD_FAILURE,
+        payload: response.data || { message: 'Password change failed' },
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: auth.CHANGE_PASSWORD_FAILURE,
+      payload: error?.response?.data || error?.data || { message: 'Network error' },
+    });
+  }
+}
+
 export function* loginWatcher() {
   yield takeEvery(auth.LOGIN, loginSagaFunction);
 }
@@ -119,10 +145,15 @@ export function* signupWatcher() {
   yield takeEvery(auth.SIGNUP, signupSagaFunction);
 }
 
+export function* changePasswordWatcher() {
+  yield takeEvery(auth.CHANGE_PASSWORD, changePasswordSagaFunction);
+}
+
 function* authSaga() {
   yield all([fork(loginWatcher)]);
   yield all([fork(logoutWatcher)]);
   yield all([fork(signupWatcher)]);
+  yield all([fork(changePasswordWatcher)]);
 }
 
 export default authSaga;

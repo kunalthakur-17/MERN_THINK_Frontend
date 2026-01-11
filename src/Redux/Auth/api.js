@@ -1,5 +1,5 @@
 import { APICore } from "../../helpers/api/apiCore";
-import { login, logout, signup } from "../../constants/endpoint";
+import { login, logout, signup, changePassword } from "../../constants/endpoint";
 
 const api = new APICore();
 
@@ -24,5 +24,13 @@ export const signupApi = (data) => {
     username,
     password,
     treamandcondition,
+  });
+};
+
+export const changePasswordApi = (data) => {
+  const { currentPassword, newPassword } = data;
+  return api.update(changePassword, {
+    currentPassword,
+    newPassword,
   });
 };

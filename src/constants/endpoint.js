@@ -4,6 +4,7 @@ const baseurl = "/api/v1";
 export const login = `${baseurl}/user/login`;
 export const logout = `${baseurl}/user/logout`;
 export const signup = `${baseurl}/user/register`;
+export const changePassword = `${baseurl}/user/change-password`;
 
 
 //  Category 

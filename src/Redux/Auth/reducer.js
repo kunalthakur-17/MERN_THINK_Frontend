@@ -87,4 +87,31 @@ export const signupReducer = (state = initialState, action) => {
   }
 };
 
+export const changePasswordReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case auth.CHANGE_PASSWORD_LOADING:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case auth.CHANGE_PASSWORD_SUCCESS:
+      return {
+        data: action?.payload,
+        loading: false,
+        error: null,
+      };
+    case auth.CHANGE_PASSWORD_RESET:
+      return initialState;
+    case auth.CHANGE_PASSWORD_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 

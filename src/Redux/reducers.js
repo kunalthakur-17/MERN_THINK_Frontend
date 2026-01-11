@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { loginReducer, logoutReducer, signupReducer } from "./Auth/reducer";
+import { loginReducer, logoutReducer, signupReducer, changePasswordReducer } from "./Auth/reducer";
 import {
   getCategoriesReducer,
   createCategoryReducer,
@@ -31,6 +31,7 @@ export default combineReducers({
   loginReducer,
   logoutReducer,
   signupReducer,
+  changePasswordReducer,
   // Category
 
   getCategoriesReducer,

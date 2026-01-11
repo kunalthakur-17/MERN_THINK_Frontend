@@ -29,3 +29,13 @@ export const signupActionReset = (data) => ({
   type: auth.SIGNUP_RESET,
   payload: data,
 });
+
+export const changePasswordAction = (data) => ({
+  type: auth.CHANGE_PASSWORD,
+  payload: data,
+});
+
+export const changePasswordActionReset = (data) => ({
+  type: auth.CHANGE_PASSWORD_RESET,
+  payload: data,
+});
