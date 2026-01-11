@@ -21,6 +21,18 @@ function* loginSagaFunction({ payload }) {
         username: response.data.response.username
       }));
       
+      // Store in sessionStorage for apiCore compatibility
+      sessionStorage.setItem('event_management_user', JSON.stringify({
+        token: response.data.response.token,
+        user: {
+          id: response.data.response.userId,
+          firstName: response.data.response.firstName,
+          lastName: response.data.response.lastName,
+          email: response.data.response.email,
+          username: response.data.response.username
+        }
+      }));
+      
       // Set authorization header with new token
       setAuthorization(response.data.response.token);
       
@@ -84,6 +96,18 @@ function* signupSagaFunction({ payload }) {
         lastName: response.data.response.lastName,
         email: response.data.response.email,
         username: response.data.response.username
+      }));
+      
+      // Store in sessionStorage for apiCore compatibility
+      sessionStorage.setItem('event_management_user', JSON.stringify({
+        token: response.data.response.token,
+        user: {
+          id: response.data.response.userId,
+          firstName: response.data.response.firstName,
+          lastName: response.data.response.lastName,
+          email: response.data.response.email,
+          username: response.data.response.username
+        }
       }));
       
       // Set authorization header with new token
